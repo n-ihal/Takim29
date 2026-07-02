@@ -53,12 +53,21 @@ Audio2MindMap, kurumların ve bireylerin sesli iletişimlerinden maksimum değer
 
 - **Ürün Durumu**: [Sprint sonunda ürünün geldiği durumun ekran görüntüleri buraya eklenecek]
 
-- **Sprint Review**: Alınan kararlar: Sprint sonunda ekip bir araya gelerek tamamlanan story'leri değerlendirmiştir. Ses kaydı yükleme ve Speech-to-Text entegrasyonunun temel akışının çalıştığı görülmüş, LLM analiz motoruna ait story'lerin ise kapsamının genişliği sebebiyle bir sonraki sprint'e aktarılmasına karar verilmiştir. Ürünün genel mimarisinin sağlam bir temel üzerine oturduğu ve bir sonraki sprintte üzerine inşa edilebileceği değerlendirilmiştir. Sprint Review katılımcıları: Ahmet Furkan Yorulmaz, Nihal Yılmaz, Kadir Kırmızıyüz, Sena Şen
+- **Sprint Review**: Proje henüz en başlangıç aşamasında olduğu için bu sprintte odak, ürünün üzerine inşa edileceği teknik altyapı kararlarının netleştirilmesi olmuştur. Ekip bir araya gelerek aşağıdaki teknoloji kararlarını almıştır:
+  - Ses kaydını metne dönüştürme (Speech-to-Text) için **Whisper** kullanılmasına karar verilmiştir.
+  - Backend tarafında, Whisper ile doğal uyumu ve API geliştirme hızı sebebiyle **Python / FastAPI** kullanılmasına karar verilmiştir.
+  - Frontend tarafında **React.js (Next.js)** ile geliştirme yapılmasına karar verilmiştir.
+  - LLM destekli kavramsal analiz (ana fikir/alt konu/aksiyon öğesi çıkarımı) için bir **LLM API** (OpenAI / Anthropic) entegre edilmesine karar verilmiştir.
+  - Fizik motorlu (gravity-based) etkileşimli zihin haritası görselleştirmesi için **D3.js force-directed layout / react-force-graph** kütüphanesinin kullanılmasına karar verilmiştir.
+  - Ses dosyalarının asenkron işlenmesi (yükleme → transkript → analiz akışı) için **Celery + Redis** tabanlı bir iş kuyruğu; verilerin saklanması için **PostgreSQL** kullanılmasına karar verilmiştir.
+
+  Bu kararlar doğrultusunda web sitesinin temel altyapısı atılmaya başlanmıştır: proje repo yapısı, backend ve frontend iskeletleri oluşturulmuş, seçilen teknolojilerin proje ortamına kurulumu tamamlanmıştır. Henüz uçtan uca çalışan bir akış bulunmamaktadır; bir sonraki sprintte ses yükleme ve Whisper entegrasyonunun hayata geçirilmesi hedeflenmektedir. Sprint Review katılımcıları: Ahmet Furkan Yorulmaz, Nihal Yılmaz, Kadir Kırmızıyüz, Sena Şen
 
 - **Sprint Retrospective:**
+  - Projenin başlangıç aşamasında olması sebebiyle bu sprintin büyük kısmının teknoloji araştırması ve karar alma sürecine ayrıldığı, bunun bir sonraki sprintte geliştirmeye ayrılacak süreyi azaltmaması için erken davranılması gerektiği konusunda fikir birliğine varılmıştır
   - Görev dağılımının sprint başında daha net yapılması gerektiği konusunda fikir birliğine varılmıştır
+  - Seçilen teknoloji stack'inin (Whisper, FastAPI, React/Next.js, D3.js force-directed graph, LLM API, Celery/Redis, PostgreSQL) ekip üyelerince benimsendiği, bir sonraki sprintte bu altyapı üzerine ilk çalışan prototipin (ses yükleme + Whisper transkripti) hedeflenmesi gerektiği kararlaştırılmıştır
   - Tahmin puanlarının gerçekçi olup olmadığı, sprint planlama toplantılarında developer'lardan alınan geri bildirimlerle birlikte daha detaylı gözden geçirilmelidir
-  - Speech-to-Text ve LLM gibi dış servis entegrasyonları için ayrılan efor/saatin ilk sprintte yetersiz kaldığı görülmüş, bir sonraki sprintte bu tür entegrasyonlara daha fazla zaman ayrılması kararlaştırılmıştır
 
 ---
 
