@@ -1,19 +1,19 @@
 # **Takım İsmi**
 
-[Takım İsminizi Buraya Yazın]
+[Takım 29]
 
 # Ürün İle İlgili Bilgiler
 
 ## Takım Elemanları
 
-- [İsim Soyisim]: Product Owner
-- [İsim Soyisim]: Scrum Master
-- [İsim Soyisim]: Developer
-- [İsim Soyisim]: Developer
+- [Ahmet Furkan Yorulmaz]: Product Owner
+- [Nihal Yılmaz]: Scrum Master
+- [Kadir Kırmızıyüz]: Developer
+- [Sena Şen]: Developer
 
 ## Ürün İsmi
 
---Audio2MindMap--
+--Vocalyze--
 
 ## Ürün Açıklaması
 
@@ -53,7 +53,7 @@ Audio2MindMap, kurumların ve bireylerin sesli iletişimlerinden maksimum değer
 
 - **Ürün Durumu**: [Sprint sonunda ürünün geldiği durumun ekran görüntüleri buraya eklenecek]
 
-- **Sprint Review**: Alınan kararlar: Sprint sonunda ekip bir araya gelerek tamamlanan story'leri değerlendirmiştir. Ses kaydı yükleme ve Speech-to-Text entegrasyonunun temel akışının çalıştığı görülmüş, LLM analiz motoruna ait story'lerin ise kapsamının genişliği sebebiyle bir sonraki sprint'e aktarılmasına karar verilmiştir. Ürünün genel mimarisinin sağlam bir temel üzerine oturduğu ve bir sonraki sprintte üzerine inşa edilebileceği değerlendirilmiştir. Sprint Review katılımcıları: [katılımcı isimleri eklenecek]
+- **Sprint Review**: Alınan kararlar: Sprint sonunda ekip bir araya gelerek tamamlanan story'leri değerlendirmiştir. Ses kaydı yükleme ve Speech-to-Text entegrasyonunun temel akışının çalıştığı görülmüş, LLM analiz motoruna ait story'lerin ise kapsamının genişliği sebebiyle bir sonraki sprint'e aktarılmasına karar verilmiştir. Ürünün genel mimarisinin sağlam bir temel üzerine oturduğu ve bir sonraki sprintte üzerine inşa edilebileceği değerlendirilmiştir. Sprint Review katılımcıları: Ahmet Furkan Yorulmaz, Nihal Yılmaz, Kadir Kırmızıyüz, Sena Şen
 
 - **Sprint Retrospective:**
   - Görev dağılımının sprint başında daha net yapılması gerektiği konusunda fikir birliğine varılmıştır
