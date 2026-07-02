@@ -51,7 +51,11 @@ Audio2MindMap, kurumların ve bireylerin sesli iletişimlerinden maksimum değer
 
 - **Sprint board update**: [Sprint board ekran görüntüleri buraya eklenecek]
 
-- **Ürün Durumu**: [Sprint sonunda ürünün geldiği durumun ekran görüntüleri buraya eklenecek]
+- **Ürün Durumu**:
+
+  ![Vocalyze genel bakış](assets/screenshots/urun-genel-bakis.png)
+
+  ![Vocalyze dashboard ve zihin haritası](assets/screenshots/urun-dashboard-mindmap.png)
 
 - **Sprint Review**: Proje henüz en başlangıç aşamasında olduğu için bu sprintte odak, ürünün üzerine inşa edileceği teknik altyapı kararlarının netleştirilmesi olmuştur. Ekip bir araya gelerek aşağıdaki teknoloji kararlarını almıştır:
   - Ses kaydını metne dönüştürme (Speech-to-Text) için **Whisper** kullanılmasına karar verilmiştir.
