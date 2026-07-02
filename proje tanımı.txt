@@ -1,0 +1,24 @@
+Audio2MindMap Kapsamlı Ürün Vizyonu
+Audio2MindMap, kurumların ve bireylerin sesli iletişimlerinden maksimum değeri elde etmesini sağlayan, üretken yapay zeka destekli bir analitik ve görselleştirme platformudur. Uzun ve yorucu ses kayıtlarını, saniyeler içinde etkileşimli, okunabilir ve aksiyona dönüştürülebilir görsel zihin haritalarına çevirir.
+1. Çözülen Temel Problemler (Acı Noktaları  Pain Points)
+Bu ürünün varoluş amacı, modern iş dünyasının ve eğitim hayatının şu büyük sorunlarına çare olmaktır
+
+Metin Yorgunluğu (Text Fatigue) 1 saatlik bir toplantının dökümü ortalama 10-15 sayfalık düz bir PDF dosyasıdır. İnsan beyni bu kadar uzun ve renksiz metinleri okumaya direnç gösterir; özetler bile genellikle atlanarak okunur.
+Toplantı Amnezisi ve Kaybolan Kararlar Toplantıdan çıktıktan kısa bir süre sonra kimin ne yapacağının unutulması ve konuşulan spesifik detayların kaybolması.
+Bağlam Kopukluğu (Context Loss) Düz metin özetlerinde, A fikrinden B fikrine nasıl geçildiği veya farklı departmanların sorunlarının birbiriyle nasıl kesiştiği anlaşılamaz. Zihin haritaları ise bu ilişkileri görünür kılar.
+2. Kullanıcı Deneyimi ve Senaryosu (User Journey)
+Bir kullanıcının platformunuzla yaşayacağı Vay Canına! (Aha! Moment) deneyimi adım adım şöyle tasarlanmalıdır
+
+Veri Girişi Kullanıcı, platforma 45 dakikalık haftalık strateji toplantısının ses kaydını yükler.
+Şeffaf İşlem Süreci Ekranda sadece dönen bir yükleme ikonu yerine, sistemin ne yaptığını anlatan durum güncellemeleri akar Sesi metne döküyorum... ➔ Ana fikirleri analiz ediyorum... ➔ Kavramsal haritayı çiziyorum...
+Görsel Şölen İşlem tamamlandığında, ekranın ortasında devasa, renkli ve düğümlerin birbiriyle fiziksel olarak etkileşime girdiği (GravityFizik motoru olan) bir Ağ Grafiği belirir. Ana gündem maddeleri büyük ve merkezi düğümler, alt detaylar ise onlara bağlanan küçük uydular halindedir.
+Etkileşimli Keşif Kullanıcı, grafikteki 2024 Pazarlama Bütçesi baloncuğuna tıklar. Ekranın sağ tarafında açılan şık bir panelde, o alt konunun kısa bir metin özeti, konuşulduğu zaman aralığı (Dakika 1240 - 1510) listelenir.
+3. Hedef Kitle Kimler Kullanacak
+Kullanıcı ProfiliKullanım Amacı ve Ürettiği DeğerÇevik (Agile) Yazılım EkipleriSprint planlama veya Retrospektif toplantılarındaki tartışmaları, sorunları ve çözüm önerilerini birbirine bağlayarak görmek.Ürün Yöneticileri ve SatışçılarMüşteri görüşmelerini (User DiscoverySales Calls) haritalandırarak, müşterinin değindiği en büyük şikayet kümelerini görsel olarak fark etmek.Araştırmacılar, Gazeteciler, ÖğrencilerUzun akademik röportajları veya üniversite ders kayıtlarını çalışılabilir, hafızada kalıcı kavram haritalarına dönüştürmek.
+4. Ürünü Öne Çıkaracak Ekstra Özellikler (Fark Yaratanlar)
+Bootcamp projenizi sıradanlıktan kurtarmak için odaklanabileceğiniz spesifik değer önerileri
+
+Aksiyon Öğeleri (Action Items) Düğümü LLM, metni analiz ederken Bunu yarın halledelim, Ahmet bu raporu hazırlasın gibi cümleleri tespit eder. Haritada farklı renkte (örneğin Kırmızı) bir Yapılacaklar düğümü oluşturur ve tüm aksiyonları buraya bağlar.
+Zaman Damgası (Timestamp) Entegrasyonu Sadece haritayı çizmekle kalmaz; kullanıcı bir düğüme tıkladığında toplantının tam o saniyesini referans olarak gösterir.
+Dışa Aktarma (Export) Çizilen haritanın tek tıkla PNG veya standart bir JSON (Miro, Notion veya draw.io gibi araçlara aktarılabilir) formatında indirilmesi.
+Satış Cümlesi (Elevator Pitch) Sessiz notları, yaşayan haritalara dönüştürüyoruz. 1 saatlik kaos dolu toplantınızı, 1 dakikada tek bakışta anlaşılır bir yapıya kavuşturun.
