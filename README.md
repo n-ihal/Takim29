@@ -6,10 +6,10 @@
 
 ## Takım Elemanları
 
-- [Ahmet Furkan Yorulmaz]: Product Owner
-- [Nihal Yılmaz]: Scrum Master
-- [Kadir Kırmızıyüz]: Developer
-- [Sena Şen]: Developer
+- **Ahmet Furkan Yorulmaz**: Product Owner
+- **Nihal Yılmaz**: Scrum Master
+- **Kadir Kırmızıyüz**: Developer
+- **Sena Şen**: Developer
 
 ## Ürün İsmi
 
