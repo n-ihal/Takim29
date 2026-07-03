@@ -49,7 +49,13 @@ Audio2MindMap, kurumların ve bireylerin sesli iletişimlerinden maksimum değer
 
 - **Daily Scrum**: Daily Scrum toplantılarının ekip üyelerinin farklı programlara sahip olması nedeniyle zamansal sebeplerden ötürü Slack üzerinden yazılı olarak yapılmasına karar verilmiştir. Her ekip üyesi gün içinde yaptığı işi, bir sonraki gün yapmayı planladığı işi ve varsa karşılaştığı engelleri paylaşmaktadır. [Daily Scrum yazışma örnekleri/notları buraya eklenecek]
 
-- **Sprint board update**: [Sprint board ekran görüntüleri buraya eklenecek]
+- **Sprint board update**:
+
+  ![Sprint 1 akış diyagramı](assets/screenshots/sprint1-akis-diyagrami.png)
+
+  ![Sprint 1 Kanban board](assets/screenshots/sprint1-kanban-board.jpg)
+
+  ![Sprint 1 burndown chart](assets/screenshots/sprint1-burndown-chart.jpg)
 
 - **Ürün Durumu**:
 
