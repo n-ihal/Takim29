@@ -83,8 +83,11 @@ Audio2MindMap, kurumların ve bireylerin sesli iletişimlerinden maksimum değer
 
 - **Takım İçi İletişim ve Süreç Takibi**:
 
-![Konusma-Ozeti](assets/screenshots/Konusma-Ozeti.png)
+![Toplanti](assets/screenshots/Toplanti.png)
 
+![Fikir-tartismasi](assets/screenshots/Fikir-tartismasi.png)
+
+![Ozet-Scrum-toplantisi](assets/screenshots/Ozet-Scrum-toplantisi.png)
 
 # Sprint 2
 
