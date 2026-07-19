@@ -161,8 +161,13 @@ Kodlama Görselleri
 
 <img width="720" height="593" alt="ekran_resmi_2026-07-19_17 37 43_720" src="https://github.com/user-attachments/assets/b94dba4b-9594-4c32-8cbc-ab186554c76f" />
 <img width="720" height="432" alt="ekran_resmi_2026-07-19_17 37 03_720" src="https://github.com/user-attachments/assets/a186ffee-492f-4319-8707-2219b307080c" />
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<img width="1782" height="1359" alt="image" src="https://github.com/user-attachments/assets/92a2f1f6-b56c-41c8-9bd8-5872c6b33007" />
+<img width="2615" height="1190" alt="image" src="https://github.com/user-attachments/assets/1e43ded2-8a8a-40fd-a6d6-61bc163c8ee6" />
 
 Takım Konuşmaları
+<img width="2470" height="1856" alt="image" src="https://github.com/user-attachments/assets/e6839469-008d-4f37-9102-8bb4d753bd21" />
 <img width="846" height="507" alt="image" src="https://github.com/user-attachments/assets/8f520a20-210e-471c-aaef-95f861fd7523" />
 <img width="828" height="508" alt="image" src="https://github.com/user-attachments/assets/eeff4bec-66f3-4a7f-a7bb-7a68d4a27caa" />
 <img width="1085" height="512" alt="image" src="https://github.com/user-attachments/assets/2ece5212-3718-402e-9799-f961236adfe0" />
