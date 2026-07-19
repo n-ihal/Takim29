@@ -91,7 +91,69 @@ Audio2MindMap, kurumların ve bireylerin sesli iletişimlerinden maksimum değer
 
 # Sprint 2
 
----
+Sprint 2 Hedefi
+Kullanıcıların ses dosyalarını platforma yükleyebildiği, arka planda asenkron iş kuyruğu (Celery/Redis) aracılığıyla Whisper kullanılarak metne dönüştürüldüğü uçtan uca (end-to-end) akışı tamamlamak.
+
+User Story 1: Ses Dosyası Yükleme Akışı
+Story: Bir kullanıcı olarak, toplantı ses kaydımı sisteme yükleyebilmek istiyorum ki sistem bu kaydı analiz edebilsin.
+
+Kabul Kriterleri (Acceptance Criteria):
+
+Kullanıcı; .mp3, .wav veya .m4a formatındaki dosyaları yükleyebilmelidir.
+
+Yüklenen dosya boyutu için bir sınır belirlenmelidir (Örn: Maksimum 50 MB).
+
+Desteklenmeyen dosya formatlarında veya boyut aşımında kullanıcıya anlaşılır bir hata mesajı gösterilmelidir.
+
+Yükleme sırasında ekranda "Yükleniyor..." (Loading/Progress) animasyonu bulunmalıdır.
+
+Teknik Görevler (Tasks):
+
+Frontend (Next.js): Sürükle-bırak (drag & drop) veya dosya seçici buton barındıran yükleme arayüzünün tasarlanması ve geliştirilmesi.
+
+Frontend (Next.js): Dosya seçimi sonrası format ve boyut validasyonlarının (validation) client-side tarafında yapılması.
+
+Backend (FastAPI): /api/upload endpoint'inin oluşturulması.
+
+Backend (FastAPI): Gelen dosyanın backend tarafında (server-side) doğrulanması ve sunucunun geçici belleğine/klasörüne kaydedilmesi.
+
+User Story 2: Asenkron Transkripsiyon Altyapısı (Celery & Whisper)
+Story: Bir sistem olarak, büyük boyutlu ses dosyalarını arka planda asenkron olarak işlemek istiyorum ki kullanıcının tarayıcısı işlem bitene kadar donmasın veya zaman aşımına (timeout) uğramasın.
+
+Kabul Kriterleri (Acceptance Criteria):
+
+Ses dosyası yüklendikten sonra, transkripsiyon işlemi bir iş kuyruğuna (message broker) aktarılmalıdır.
+
+Whisper modeli, kuyruktaki işi alıp metne dönüştürme işlemini başarılı bir şekilde tamamlamalıdır.
+
+İşlemin durumu "Bekliyor (Pending)", "İşleniyor (Processing)" ve "Tamamlandı (Completed) / Hatalı (Failed)" olarak takip edilebilmelidir.
+
+Teknik Görevler (Tasks):
+
+Backend: Celery worker konfigürasyonunun yapılması ve Redis bağlantısının kurulması.
+
+Backend: OpenAI Whisper modelinin (veya API'sinin) projeye entegre edilmesi.
+
+Backend: Celery üzerinde çalışacak transcribe_audio_task isimli asenkron fonksiyonun yazılması.
+
+Veritabanı (PostgreSQL): Yüklenen dosyanın metadata (isim, yüklenme tarihi, durum) bilgilerinin ve işlem bittiğinde ortaya çıkan metnin veritabanına kaydedilmesi.
+
+User Story 3: Transkript Sonucunun Görüntülenmesi
+Story: Bir kullanıcı olarak, yüklediğim ses dosyasının metne dönüştürülmüş halini ekranda görmek istiyorum ki toplantıda neler konuşulduğunu okuyabileyim.
+
+Kabul Kriterleri (Acceptance Criteria):
+
+Dosya "İşleniyor" durumundayken ekranda sürecin devam ettiğini belirten bir UI olmalıdır.
+
+İşlem bittiğinde, sayfayı yenilemeye gerek kalmadan Whisper'dan dönen saf metin ekranda gösterilmelidir.
+
+Teknik Görevler (Tasks):
+
+Backend (FastAPI): Frontend'in işlemin durumunu sorgulayabileceği /api/task/{task_id}/status endpoint'inin geliştirilmesi.
+
+Frontend (Next.js): Polling mekanizması kurularak (örneğin her 3 saniyede bir) ilgili task'in durumunun sorgulanması. (Not: İleride WebSockets'e geçirilebilir, ancak Sprint 2 için polling daha hızlı bir çözümdür).
+
+Frontend (Next.js): Gelen metnin arayüzde okunabilir bir şekilde render edilmesi.
 
 # Sprint 3
 
