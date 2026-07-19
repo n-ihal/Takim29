@@ -155,6 +155,20 @@ Frontend (Next.js): Polling mekanizması kurularak (örneğin her 3 saniyede bir
 
 Frontend (Next.js): Gelen metnin arayüzde okunabilir bir şekilde render edilmesi.
 
+Sprint 2 
+Kodlama Görselleri
+<img width="720" height="603" alt="ekran_resmi_2026-07-19_17 35 47_720" src="https://github.com/user-attachments/assets/2fd4c30d-6a08-4e85-a39d-bfef668505d8" />
+
+<img width="720" height="593" alt="ekran_resmi_2026-07-19_17 37 43_720" src="https://github.com/user-attachments/assets/b94dba4b-9594-4c32-8cbc-ab186554c76f" />
+<img width="720" height="432" alt="ekran_resmi_2026-07-19_17 37 03_720" src="https://github.com/user-attachments/assets/a186ffee-492f-4319-8707-2219b307080c" />
+
+Takım Konuşmaları
+<img width="846" height="507" alt="image" src="https://github.com/user-attachments/assets/8f520a20-210e-471c-aaef-95f861fd7523" />
+<img width="828" height="508" alt="image" src="https://github.com/user-attachments/assets/eeff4bec-66f3-4a7f-a7bb-7a68d4a27caa" />
+<img width="1085" height="512" alt="image" src="https://github.com/user-attachments/assets/2ece5212-3718-402e-9799-f961236adfe0" />
+<img width="612" height="507" alt="image" src="https://github.com/user-attachments/assets/17412d79-69f0-4af4-939b-998c59b00d3a" />
+<img width="402" height="280" alt="image" src="https://github.com/user-attachments/assets/2e66a9e3-1ef7-4bc0-9922-25bd402a1dea" />
+
 # Sprint 3
 
 ---
