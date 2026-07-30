@@ -1,0 +1,81 @@
+{
+  "audio_file": "video1.mp3",
+  "duration": 32.88,
+  "model": "large-v3-turbo",
+  "speakers": [
+    "Kişi 1",
+    "Kişi 2"
+  ],
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 4.98,
+      "speaker": "Kişi 1",
+      "text": "Siz insanlara üç dil öğrenmesini önerseniz, biri İngilizce, diğer ikisi ne?"
+    },
+    {
+      "id": 1,
+      "start": 5.28,
+      "end": 10.32,
+      "speaker": "Kişi 2",
+      "text": "Kendi keyfine göre seçebilir ondan sonra, neresi değil yani, kendine göre."
+    },
+    {
+      "id": 2,
+      "start": 10.56,
+      "end": 15.06,
+      "speaker": "Kişi 2",
+      "text": "Genelde insanlar Fransızca, İtalyanca grubundan seçiyorlar."
+    },
+    {
+      "id": 3,
+      "start": 15.28,
+      "end": 16.5,
+      "speaker": "Kişi 2",
+      "text": "Rusça seven var."
+    },
+    {
+      "id": 4,
+      "start": 17.0,
+      "end": 18.92,
+      "speaker": "Kişi 2",
+      "text": "Ama zor be hocam, Rusça nasıl öğreniyorsunuz?"
+    },
+    {
+      "id": 5,
+      "start": 18.94,
+      "end": 20.9,
+      "speaker": "Kişi 2",
+      "text": "Rusça çok zor, yani oralarda yaşamıyor."
+    },
+    {
+      "id": 6,
+      "start": 20.9,
+      "end": 23.14,
+      "speaker": "Kişi 1",
+      "text": "En zor hangisidir hocam, dil öğrenmesi açısından?"
+    },
+    {
+      "id": 7,
+      "start": 23.88,
+      "end": 25.46,
+      "speaker": "Kişi 2",
+      "text": "Bence Rusça çok zor."
+    },
+    {
+      "id": 8,
+      "start": 25.62,
+      "end": 29.62,
+      "speaker": "Kişi 2",
+      "text": "Bütün gramerde bütün kaideleri istisna için öğrenirsin."
+    },
+    {
+      "id": 9,
+      "start": 30.0,
+      "end": 32.88,
+      "speaker": "Kişi 2",
+      "text": "Yani kaideli kelime kadar istisna var."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+[00:00:00 - 00:00:04] Kişi 1: Siz insanlara üç dil öğrenmesini önerseniz, biri İngilizce, diğer ikisi ne?
+[00:00:05 - 00:00:10] Kişi 2: Kendi keyfine göre seçebilir ondan sonra, neresi değil yani, kendine göre.
+[00:00:10 - 00:00:15] Kişi 2: Genelde insanlar Fransızca, İtalyanca grubundan seçiyorlar.
+[00:00:15 - 00:00:16] Kişi 2: Rusça seven var.
+[00:00:17 - 00:00:18] Kişi 2: Ama zor be hocam, Rusça nasıl öğreniyorsunuz?
+[00:00:18 - 00:00:20] Kişi 2: Rusça çok zor, yani oralarda yaşamıyor.
+[00:00:20 - 00:00:23] Kişi 1: En zor hangisidir hocam, dil öğrenmesi açısından?
+[00:00:23 - 00:00:25] Kişi 2: Bence Rusça çok zor.
+[00:00:25 - 00:00:29] Kişi 2: Bütün gramerde bütün kaideleri istisna için öğrenirsin.
+[00:00:30 - 00:00:32] Kişi 2: Yani kaideli kelime kadar istisna var.
