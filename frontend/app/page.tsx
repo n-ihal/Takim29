@@ -1,7 +1,7 @@
 'use client';
+
 import { toPng } from "html-to-image";
-import React, { useState, useRef } from 'react';
-import html2canvas from 'html2canvas';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   Mic, 
   Search, 
@@ -11,13 +11,57 @@ import {
   Download, 
   FileImage, 
   Code, 
-  Bell, 
-  User,
   CheckCircle2,
   Sparkles
 } from 'lucide-react';
+import { getProjects, createProject, ProjectDTO } from '../src/services/api';
 
-// MADDE 4: Mock Data Formatı (Zihin Haritası Düğümleri ve Çizgileri)
+// Proje Ekleme & Bağlantı Test Bileşeni
+function ProjectsTestSection() {
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    getProjects()
+      .then((res) => {
+        console.log("Projeler:", res);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Hata:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleCreate = async () => {
+    const newProject: ProjectDTO = {
+      name: 'Vocalyze Sprint 3',
+      description: 'TSX üzerinden eklendi',
+      status: 'Active',
+    };
+
+    const res = await createProject(newProject);
+    console.log('Oluşturulan Proje:', res);
+  };
+
+  return (
+    <div className="p-4 bg-[#181d2f] rounded-xl border border-indigo-500/30 mb-4 flex items-center justify-between">
+      <div>
+        <h3 className="text-xs font-semibold text-slate-200">API Bağlantı Testi</h3>
+        <p className="text-[11px] text-slate-400">
+          {loading ? 'Projeler yükleniyor...' : 'FastAPI bağlantısı aktif!'}
+        </p>
+      </div>
+      <button 
+        onClick={handleCreate}
+        className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-3 py-1.5 rounded-lg transition"
+      >
+        + API Proje Ekle
+      </button>
+    </div>
+  );
+}
+
+// Mock Data (Zihin Haritası Düğümleri)
 const MOCK_MIND_MAP = {
   id: 'project-vocalyze-01',
   title: 'Weekly Team Synch',
@@ -38,6 +82,7 @@ const MOCK_MIND_MAP = {
   ]
 };
 
+// TEK ANA BİLEŞEN (EXPORT DEFAULT)
 export default function Home() {
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -92,28 +137,32 @@ export default function Home() {
     }
   };
 
- const exportAsPNG = async () => {
-  if (!mindMapRef.current) return;
+  const exportAsPNG = async () => {
+    if (!mindMapRef.current) return;
 
-  try {
-    const dataUrl = await toPng(mindMapRef.current);
+    try {
+      const dataUrl = await toPng(mindMapRef.current);
 
-    const link = document.createElement("a");
-    link.download = "mindmap.png";
-    link.href = dataUrl;
-    link.click();
+      const link = document.createElement("a");
+      link.download = "mindmap.png";
+      link.href = dataUrl;
+      link.click();
 
-    setIsExportOpen(false);
-  } catch (err) {
-    console.error(err);
-  }
-};
+      setIsExportOpen(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="flex-1 p-6 grid grid-cols-12 gap-6 max-w-[1920px] w-full mx-auto antialiased selection:bg-indigo-500 selection:text-white">
       
       {/* SOL PANEL */}
       <div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
+        
+        {/* API Bağlantı Test Bileşeni */}
+        <ProjectsTestSection />
+
         <div className="p-5 rounded-2xl bg-[#121622] border border-[#1f2438] shadow-xl">
           <h2 className="text-sm font-semibold mb-4 text-slate-200">Start New Analysis</h2>
           
@@ -223,7 +272,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* HTML & CSS MIND MAP CANVAS (Zoom ve Canvas Referansı) */}
+        {/* HTML & CSS MIND MAP CANVAS */}
         <div ref={mindMapRef} className="flex-1 bg-[#090b10] rounded-xl mt-4 relative overflow-hidden flex items-center justify-center border border-[#161a28] p-8">
           <div className="absolute inset-0 bg-[radial-gradient(#1f2438_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none"></div>
 
