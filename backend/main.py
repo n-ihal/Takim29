@@ -296,6 +296,7 @@ async def create_mindmap(request: TranscriptRequest):
 class ProcessAudioDTO(BaseModel):
     file_id: str
     project_id: Optional[str] = None
+    target_language: Optional[str] = "Turkish"  # Dil seçimi eklendi
 
 @app.post("/api/process-audio")
 async def process_audio(payload: ProcessAudioDTO):
@@ -309,7 +310,7 @@ async def process_audio(payload: ProcessAudioDTO):
     if not file_path or not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="Ses dosyası sunucuda bulunamadı.")
 
-    # 2. GERÇEK transkripsiyonu çalıştır (ASR + konuşmacı ayrımı)
+    # 2. GERÇEK transkripsiyonu çalıştır (Tek sefer)
     try:
         transcript_result = transcribe(file_path)
     except Exception as e:
@@ -321,9 +322,9 @@ async def process_audio(payload: ProcessAudioDTO):
     if not full_text.strip():
         raise HTTPException(status_code=422, detail="Ses dosyasından metin çıkarılamadı.")
 
-    # 3. Gerçek transkripti LLM'e gönder
+    # 3. Transkripti ve seçilen dili LLM'e gönder (Tek sefer)
     try:
-        mindmap_data = generate_mindmap_json(full_text)
+        mindmap_data = generate_mindmap_json(full_text, target_language=payload.target_language or "Turkish")
     except Exception as e:
         print("=== LLM HATASI ===")
         traceback.print_exc()
@@ -358,11 +359,6 @@ async def process_audio(payload: ProcessAudioDTO):
             "mind_map_id": map_id,
         }).eq("id", payload.file_id).execute()
 
-        # Güncellenmiş hali:
-        supabase.table("audio_library").update({
-            "status": "COMPLETED"
-        }).eq("id", payload.file_id).execute()
-
         if payload.project_id:
             project = supabase.table("projects").select("maps_count, audio_count").eq("id", payload.project_id).execute()
             if project.data:
@@ -378,3 +374,29 @@ async def process_audio(payload: ProcessAudioDTO):
         raise HTTPException(status_code=500, detail=f"Kayıt hatası: {str(e)}")
 
     return {"status": "success", "data": mindmap_data, "map_id": map_id}
+
+# --- Ses Transkriptleri İçinde Akıllı Arama ---
+@app.get("/api/search-transcript")
+def search_transcript(q: str = Query(..., min_length=1)):
+    # Ses kütüphanesindeki transkriptleri tara
+    response = supabase.table("audio_library").select("id, title, transcript").not_.is_("transcript", "null").execute()
+    
+    matches = []
+    query_lower = q.lower()
+    
+    for item in (response.data or []):
+        transcript = item.get("transcript", "")
+        if query_lower in transcript.lower():
+            # Kelimenin geçtiği etrafındaki metni (snippet) kesip alalım
+            idx = transcript.lower().find(query_lower)
+            start = max(0, idx - 40)
+            end = min(len(transcript), idx + len(q) + 40)
+            snippet = "..." + transcript[start:end] + "..."
+            
+            matches.append({
+                "audio_id": item.get("id"),
+                "title": item.get("title"),
+                "snippet": snippet
+            })
+            
+    return {"query": q, "matches": matches}

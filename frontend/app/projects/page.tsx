@@ -38,19 +38,20 @@ export default function ProjectsPage() {
   const [newProjectDesc, setNewProjectDesc] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 1. Projeleri Backend'den Çekme
+  // Projeleri Backend'den Çekme
   const fetchProjects = async () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch('http://localhost:8000/api/projects');
+      // localhost yerine 127.0.0.1 kullanıyoruz (Olası bağlantı sorunlarını önlemek için)
+      const res = await fetch('http://127.0.0.1:8000/api/projects');
       if (!res.ok) throw new Error('Backend ile iletişim kurulamadı.');
       
       const rawData = await res.json();
       
       // Supabase snake_case alanlarını güvenli bir şekilde entegre etme
       const mappedData: ProjectItem[] = rawData.map((item: any) => ({
-        id: str(item.id),
+        id: String(item.id), // HATA BURADA ÇÖZÜLDÜ: str() yerine doğrudan String() kullanıldı.
         name: item.name || 'Untitled Project',
         description: item.description || '',
         status: item.status || 'Active',
@@ -63,7 +64,7 @@ export default function ProjectsPage() {
 
       setProjects(mappedData);
     } catch (err: any) {
-      console.error(err);
+      console.error('Proje çekme hatası:', err);
       setError('Projeler yüklenirken hata oluştu. Backend (FastAPI) sunucusunun çalıştığından emin ol.');
     } finally {
       setLoading(false);
@@ -74,23 +75,20 @@ export default function ProjectsPage() {
     fetchProjects();
   }, []);
 
-  // 2. Yeni Proje Oluşturma (Post Request)
+  // Yeni Proje Oluşturma
   const handleCreateProject = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newProjectName.trim()) return;
 
     try {
       setIsSubmitting(true);
-      const res = await fetch('http://localhost:8000/api/projects', {
+      const res = await fetch('http://127.0.0.1:8000/api/projects', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: newProjectName,
           description: newProjectDesc,
-          status: 'Active',
-          progress: 0,
-          members_count: 1,
-          maps_count: 0
+          status: 'Active'
         })
       });
 
@@ -106,8 +104,6 @@ export default function ProjectsPage() {
       setIsSubmitting(false);
     }
   };
-
-  const str = (val: any) => (val ? String(val) : '');
 
   const filteredProjects = projects.filter((p) =>
     p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -126,7 +122,6 @@ export default function ProjectsPage() {
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Arama Kutusu */}
           <div className="relative">
             <Search className="w-4 h-4 absolute left-3.5 top-2.5 text-slate-500" />
             <input 
