@@ -1,16 +1,18 @@
 import os
 import uuid
+import traceback
+from app.transcription.pipeline import transcribe
+from pydantic import BaseModel
+from app.llm_engine import generate_mindmap_json
 from typing import Optional
 from fastapi import FastAPI, UploadFile, File, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from pydantic import BaseModel
 from supabase import create_client, Client
-from fastapi.middleware.cors import CORSMiddleware
 
 # ================= 1. SUPABASE BAGLANTISI =================
 SUPABASE_URL = os.getenv("SUPABASE_URL", "https://lezsyqjynsbmudijvxtn.supabase.co")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlenN5cWp5bnNibXVkaWp2eHRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU1NzQzMDUsImV4cCI6MjEwMTE1MDMwNX0.HvbQmYny_tRibRK9Zz7w8HrkUuX53E1mNwzXRC9Y_V8")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY", "sb_publishable_UCbw2ABJpQ9p0IVc5a_Duw_WzKq-bMG")
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
@@ -30,22 +32,15 @@ class MindMapUpdateDTO(BaseModel):
     title: Optional[str] = None
     nodes_data: Optional[dict] = None
 
+class TranscriptRequest(BaseModel):
+    text: str
+
 # ================= 3. FASTAPI UYGULAMASI VE CORS =================
 app = FastAPI(title="Vocalyze Supabase Backend API")
-from fastapi.middleware.cors import CORSMiddleware
 
-# app = FastAPI() satırından hemen sonra ekle:
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Geliştirme aşamasında tüm kökenlere izin verir
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -64,7 +59,6 @@ async def upload_audio_file(file: UploadFile = File(...)):
         ext = os.path.splitext(file.filename)[1] if file.filename else ".mp3"
         saved_path = os.path.join(UPLOAD_DIR, f"{file_id}{ext}")
         
-        # Dosyayı diske kaydet
         contents = await file.read()
         with open(saved_path, "wb") as buffer:
             buffer.write(contents)
@@ -86,7 +80,6 @@ async def upload_audio_file(file: UploadFile = File(...)):
         return {"status": "success", "file_id": file_id, "data": response.data}
 
     except Exception as e:
-        # Hatayı doğrudan HTTP 500 yanıtının detayına yazıyoruz
         raise HTTPException(status_code=500, detail=f"HATA DETAYI: {str(e)}")
 
 # --- 2. PROJECTS API ---
@@ -138,7 +131,6 @@ def delete_project(project_id: str):
     supabase.table("projects").delete().eq("id", project_id).execute()
     return {"status": "success", "message": "Proje silindi."}
 
-
 # --- 3. MY MAPS API ---
 @app.get("/api/maps")
 def get_maps():
@@ -155,7 +147,6 @@ def get_map_detail(map_id: str):
 @app.post("/api/maps")
 def create_map(payload: MindMapCreateDTO):
     try:
-        # nodes_data güvenli okuma
         nodes_dict = payload.nodes_data or {}
         nodes_list = nodes_dict.get("nodes", []) if isinstance(nodes_dict, dict) else []
         nodes_count = len(nodes_list)
@@ -192,6 +183,7 @@ def update_map(map_id: str, payload: MindMapUpdateDTO):
 def delete_map(map_id: str):
     supabase.table("mind_maps").delete().eq("id", map_id).execute()
     return {"status": "success", "message": "Harita silindi."}
+
 # --- 4. LIBRARY API ---
 @app.get("/api/library")
 def get_library():
@@ -228,7 +220,6 @@ def delete_audio(audio_id: str):
     supabase.table("audio_library").delete().eq("id", audio_id).execute()
     return {"status": "success", "message": "Kayıt ve dosya silindi."}
 
-
 # --- 5. INTEGRATIONS API ---
 @app.get("/api/integrations")
 def get_integrations():
@@ -248,7 +239,6 @@ def toggle_integration(integration_id: str):
     response = supabase.table("integrations").update({"is_connected": new_status, "sync_status": new_sync}).eq("id", integration_id).execute()
     return {"status": "success", "is_connected": new_status}
 
-
 # --- 6. GLOBAL SEARCH ---
 @app.get("/api/search")
 def global_search(q: str = Query(..., min_length=1)):
@@ -264,3 +254,127 @@ def global_search(q: str = Query(..., min_length=1)):
             "audio_library": audio.data
         }
     }
+
+# ==========================================================
+# --- 7. LLM ENGINE API (Zihin Haritası Üretimi ve Otomatik Kayıt) ---
+# ==========================================================
+@app.post("/api/generate-mindmap")
+async def create_mindmap(request: TranscriptRequest):
+    # Gelen metni Gemini'ye gönderiyoruz
+    mindmap_data = generate_mindmap_json(request.text)
+    
+    if not mindmap_data:
+        raise HTTPException(status_code=500, detail="Zihin haritası oluşturulurken LLM tarafında bir hata meydana geldi.")
+        
+    try:
+        nodes_dict = mindmap_data or {}
+        nodes_list = nodes_dict.get("nodes", []) if isinstance(nodes_dict, dict) else []
+        nodes_count = len(nodes_list)
+        
+        # Haritaya dinamik bir başlık bulalım
+        map_title = "Ses Analizi Zihin Haritası"
+        for node in nodes_list:
+            if node.get("type") == "main":
+                map_title = node.get("label", "AI Zihin Haritası")
+                break
+
+        # Üretilen haritayı Supabase 'mind_maps' tablosuna otomatik kaydediyoruz
+        db_data = {
+            "id": f"m-{uuid.uuid4().hex[:6]}",
+            "title": map_title,
+            "category": "MEETINGS",
+            "nodes_data": nodes_dict,
+            "nodes_count": nodes_count
+        }
+        supabase.table("mind_maps").insert(db_data).execute()
+        print("Zihin haritası başarıyla Supabase'e kaydedildi!")
+    except Exception as db_err:
+        print("Supabase'e kaydetme uyarısı:", str(db_err))
+        
+    return {"status": "success", "data": mindmap_data}
+
+class ProcessAudioDTO(BaseModel):
+    file_id: str
+    project_id: Optional[str] = None
+
+@app.post("/api/process-audio")
+async def process_audio(payload: ProcessAudioDTO):
+    # 1. Ses kaydını Supabase'den bul
+    audio_record = supabase.table("audio_library").select("*").eq("id", payload.file_id).execute()
+    if not audio_record.data:
+        raise HTTPException(status_code=404, detail="Ses kaydı bulunamadı.")
+
+    audio_row = audio_record.data[0]
+    file_path = audio_row.get("file_path")
+    if not file_path or not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="Ses dosyası sunucuda bulunamadı.")
+
+    # 2. GERÇEK transkripsiyonu çalıştır (ASR + konuşmacı ayrımı)
+    try:
+        transcript_result = transcribe(file_path)
+    except Exception as e:
+        print("=== TRANSKRIPSIYON HATASI ===")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Transkripsiyon hatası: {str(e)}")
+
+    full_text = " ".join(seg["text"] for seg in transcript_result["segments"])
+    if not full_text.strip():
+        raise HTTPException(status_code=422, detail="Ses dosyasından metin çıkarılamadı.")
+
+    # 3. Gerçek transkripti LLM'e gönder
+    try:
+        mindmap_data = generate_mindmap_json(full_text)
+    except Exception as e:
+        print("=== LLM HATASI ===")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"LLM hatası: {str(e)}")
+
+    if not mindmap_data:
+        raise HTTPException(status_code=500, detail="Zihin haritası oluşturulurken LLM tarafında bir hata meydana geldi.")
+
+    # 4. Haritayı kaydet ve ilişkili kayıtları güncelle
+    try:
+        nodes_list = mindmap_data.get("nodes", []) if isinstance(mindmap_data, dict) else []
+        map_title = audio_row.get("title", "AI Zihin Haritası")
+        for node in nodes_list:
+            if node.get("type") == "main":
+                map_title = node.get("label", map_title)
+                break
+
+        map_id = f"m-{uuid.uuid4().hex[:6]}"
+        supabase.table("mind_maps").insert({
+            "id": map_id,
+            "title": map_title,
+            "category": "MEETINGS",
+            "project_id": payload.project_id,
+            "nodes_data": mindmap_data,
+            "nodes_count": len(nodes_list),
+        }).execute()
+
+        supabase.table("audio_library").update({
+            "status": "COMPLETED",
+            "transcript": full_text,
+            "duration": f"{transcript_result.get('duration', 0):.0f}s",
+            "mind_map_id": map_id,
+        }).eq("id", payload.file_id).execute()
+
+        # Güncellenmiş hali:
+        supabase.table("audio_library").update({
+            "status": "COMPLETED"
+        }).eq("id", payload.file_id).execute()
+
+        if payload.project_id:
+            project = supabase.table("projects").select("maps_count, audio_count").eq("id", payload.project_id).execute()
+            if project.data:
+                p = project.data[0]
+                supabase.table("projects").update({
+                    "maps_count": p.get("maps_count", 0) + 1,
+                    "audio_count": p.get("audio_count", 0) + 1,
+                }).eq("id", payload.project_id).execute()
+
+    except Exception as e:
+        print("=== KAYIT (SUPABASE) HATASI ===")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Kayıt hatası: {str(e)}")
+
+    return {"status": "success", "data": mindmap_data, "map_id": map_id}
