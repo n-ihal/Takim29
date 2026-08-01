@@ -176,4 +176,46 @@ Takım Konuşmaları
 
 # Sprint 3
 
----
+Değerli Ekip Arkadaşlarım ve Proje Paydaşları,
+
+Takım 29 olarak geliştirmekte olduğumuz Vocalyze (AI Audio Mapper) projemizin 3. Sprint'ini büyük bir başarıyla tamamlamış bulunuyoruz. Bu sprint boyunca temel amacımız, sistemin kalbini oluşturan yapay zeka entegrasyonlarını tamamlamak, kullanıcı arayüzünü (UI) etkileşimli hale getirmek ve backend ile frontend arasındaki veri akışını kusursuzlaştırmaktı.
+
+İşte bu sprintte hayata geçirdiğimiz kritik özellikler ve teknik başarılarımız:
+
+✨ Öne Çıkan Yeni Özellikler
+Etkileşimli Zihin Haritası (Interactive Mind Map): Kullanıcıların yüklediği ses kayıtlarını analiz ederek React Flow altyapısı ile dinamik, sürüklenebilir ve dışa aktarılabilir (PNG/JSON) zihin haritaları oluşturmayı başardık.
+
+Çoklu Dil Desteği (Multi-Language Output): Gemini AI entegrasyonumuzu güncelleyerek, çıktılarımızın (Özet, Harita Düğümleri, Aksiyon Maddeleri) kullanıcının seçtiği hedef dilde (Türkçe, İngilizce, Almanca, Fransızca) dinamik olarak üretilmesini sağladık.
+
+Ses Tonu ve Duygu Analizi (Sentiment Analysis): Toplantının veya ses kaydının genel atmosferini yapay zeka ile analiz edip, arayüzümüze şık bir "Tone Badge" (Duygu Durumu Rozeti) olarak entegre ettik.
+
+Akıllı Görev Çıkarımı (Action Items): Ses kayıtlarından çıkarılan yapılacaklar listesini, sorumlu kişi ve tarih bilgileriyle birlikte arayüzde listelenebilir hale getirdik.
+
+Entegrasyonlar Paneli (Tech Stack): Projemizin gücünü aldığı mimariyi (FastAPI, Supabase, Next.js, Gemini, React Flow) sergileyen profesyonel bir "Integrations" sayfası tasarlandı.
+
+🛠️ Teknik İyileştirmeler ve Çözülen Sorunlar (Bug Fixes)
+Sadece yeni özellikler eklemekle kalmadık, aynı zamanda sistemin kararlılığını artıracak çok önemli yapısal sorunları da çözdük:
+
+Frontend-Backend DTO Senkronizasyonu: FastAPI (snake_case) ile Next.js (camelCase) arasındaki veri modeli uyuşmazlıklarını giderdik. Projeler sayfasındaki harita, üye ve tarih verilerinin arayüze %100 doğrulukla ve güvenli bir şekilde (Number() ve String() dönüşümleriyle) yansımasını sağladık.
+
+LLM Bağlantı Optimizasyonu: requests kütüphanesinin URL yorumlama hataları f-string anlık formatlama yöntemiyle çözülerek, yapay zeka motorunun (Gemini 3 Flash) kesintisiz yanıt vermesi garanti altına alındı.
+
+UI/UX Refactoring: Arayüzdeki iç içe geçmiş (duplicate) komponent hataları temizlendi ve projeler sayfasındaki grid mimarisi optimize edildi.
+
+🎯 Sonuç
+Sprint 3'ün sonunda Vocalyze, artık sadece bir ses-metin dönüştürücü değil; sesi anlayan, özetleyen, görevlere bölen ve görselleştiren tam kapsamlı bir yapay zeka asistanı haline gelmiştir. Backend ve Frontend arasındaki sağlam köprüler kurulmuş, projenin canlıya alınması yolunda en büyük teknik engeller aşılmıştır.
+
+Emeği geçen herkese teşekkürler!
+
+<img width="3160" height="1860" alt="1000002948" src="https://github.com/user-attachments/assets/6210e7e8-5a1d-4621-a247-7d8f2d29e331" />
+<img width="2996" height="1741" alt="1000002947" src="https://github.com/user-attachments/assets/2b65346f-58ae-4d02-9fba-7c8a2104b32e" />
+<img width="2996" height="1696" alt="1000002946" src="https://github.com/user-attachments/assets/7464f5e6-1207-4e21-839c-e25a45e23452" />
+<img width="3035" height="1695" alt="1000002945" src="https://github.com/user-attachments/assets/58e2b20a-1d2f-4f37-8371-b2b53f63eb46" />
+<img width="1591" height="1144" alt="1000002950" src="https://github.com/user-attachments/assets/7b47c5b7-8eed-4255-b156-cec7b61a1591" />
+<img width="1866" height="1097" alt="1000002951" src="https://github.com/user-attachments/assets/64b0164a-9b18-44aa-9849-49ace364d202" />
+<img width="1044" height="1127" alt="1000002952" src="https://github.com/user-attachments/assets/35202850-8e6c-46a0-9ab5-0ea02a60153b" />
+<img width="1531" height="690" alt="bootcamp_4" src="https://github.com/user-attachments/assets/d5d48580-7fdf-441c-835b-13939384fc63" />
+<img width="1517" height="692" alt="bootcamp_3" src="https://github.com/user-attachments/assets/ca1ac6a7-ee1e-4815-8d05-c515434a17d6" />
+<img width="1536" height="862" alt="bootcamp_2" src="https://github.com/user-attachments/assets/d8b94bb3-4b1b-4dde-982a-225017034aa3" />
+<img width="1536" height="862" alt="bootcamp_1" src="https://github.com/user-attachments/assets/a1fddc8b-17dc-4df2-a470-234197c91a7e" />
+
