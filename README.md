@@ -207,17 +207,20 @@ Sprint 3'ün sonunda Vocalyze, artık sadece bir ses-metin dönüştürücü de�
 
 Emeği geçen herkese teşekkürler!
 
-<img width="1521" height="692" alt="bootcamp1" src="https://github.com/user-attachments/assets/510131c9-893f-4c0a-85a6-228f314f1077" />
-<img width="1507" height="692" alt="bootcamp2" src="https://github.com/user-attachments/assets/60ae0c47-d52d-4e2a-b27b-097b78eb07e6" />
-<img width="1512" height="697" alt="bootcamp3" src="https://github.com/user-attachments/assets/ab6c08b3-4f39-447b-b8f7-b966fca6d6bb" />
-<img width="1517" height="691" alt="bootcamp4" src="https://github.com/user-attachments/assets/c5bea139-8010-4fa1-928c-eb98af707e9f" />
-<img width="2996" height="1741" alt="1000002947" src="https://github.com/user-attachments/assets/8c8734be-024c-4110-9934-a1ce009b24d0" />
-<img width="2996" height="1696" alt="1000002946" src="https://github.com/user-attachments/assets/c86a5357-bbb8-483b-a324-4954951e3dcf" />
-<img width="3160" height="1860" alt="1000002948" src="https://github.com/user-attachments/assets/b3514c6a-e842-48cc-8a45-4dc56fa9e2a7" />
-<img width="1512" height="692" alt="bootcamp5" src="https://github.com/user-attachments/assets/cd422856-b9d9-440f-922f-cb75a5c6779e" />
-<img width="3035" height="1695" alt="1000002945" src="https://github.com/user-attachments/assets/370cb283-244e-45b0-9d09-88ad559c9939" />
-<img width="1866" height="1097" alt="1000002951" src="https://github.com/user-attachments/assets/53ba5841-1748-4531-b651-be0fac36af44" />
-<img width="1591" height="1144" alt="1000002950" src="https://github.com/user-attachments/assets/527f74ff-d1f6-4de9-b8ca-9299e1a0f44f" />
-<img width="1044" height="1127" alt="1000002952" src="https://github.com/user-attachments/assets/fd2828a6-8dc5-4fb5-a047-e07c3fc036f0" />
+<img width="1044" height="1127" alt="1000002952" src="https://github.com/user-attachments/assets/0a2eea57-4db7-42e6-bd0b-5166bd2b60a5" />
+<img width="1521" height="692" alt="bootcamp1" src="https://github.com/user-attachments/assets/693fb842-819d-4c39-8726-f9da71177e58" />
+<img width="1507" height="692" alt="bootcamp2" src="https://github.com/user-attachments/assets/390534ec-1452-47cd-a153-0a4988b2e8de" />
+<img width="1512" height="697" alt="bootcamp3" src="https://github.com/user-attachments/assets/20c8be0c-e0a4-4cdc-8662-93d3a56229e5" />
+<img width="1517" height="691" alt="bootcamp4" src="https://github.com/user-attachments/assets/40531a2b-cf9b-4577-b953-141faca1990d" />
+<img width="1512" height="692" alt="bootcamp5" src="https://github.com/user-attachments/assets/b1b8510e-94fc-4073-bb1f-db7b31eddfe3" />
+<img width="3160" height="1860" alt="1000002948" src="https://github.com/user-attachments/assets/c2a231b1-b7a5-4c7f-b8df-c2abb2028b2b" />
+<img width="2996" height="1741" alt="1000002947" src="https://github.com/user-attachments/assets/58e0a519-159e-4676-a0af-f735ef2497f2" />
+<img width="1024" height="580" alt="1000002946_1024" src="https://github.com/user-attachments/assets/13db107f-8d42-492e-a718-2934fd10d783" />
+<img width="3035" height="1695" alt="1000002945" src="https://github.com/user-attachments/assets/f611350c-de18-4e55-aa1f-6230e2d9973a" />
+<img width="1866" height="1097" alt="1000002951" src="https://github.com/user-attachments/assets/4dbf0f7b-08e3-42c3-abbf-7bda6725860f" />
+<img width="1591" height="1144" alt="1000002950" src="https://github.com/user-attachments/assets/2a0bc253-090f-41d7-b84f-05bb2478f48e" />
+
+
+
 
 
