@@ -214,6 +214,7 @@ Emeği geçen herkese teşekkürler!
 <img width="3160" height="1860" alt="1000002948" src="https://github.com/user-attachments/assets/b3514c6a-e842-48cc-8a45-4dc56fa9e2a7" />
 <img width="2996" height="1741" alt="1000002947" src="https://github.com/user-attachments/assets/8c8734be-024c-4110-9934-a1ce009b24d0" />
 <img width="2996" height="1696" alt="1000002946" src="https://github.com/user-attachments/assets/c86a5357-bbb8-483b-a324-4954951e3dcf" />
+<img width="1512" height="692" alt="bootcamp5" src="https://github.com/user-attachments/assets/cd422856-b9d9-440f-922f-cb75a5c6779e" />
 <img width="3035" height="1695" alt="1000002945" src="https://github.com/user-attachments/assets/370cb283-244e-45b0-9d09-88ad559c9939" />
 <img width="1866" height="1097" alt="1000002951" src="https://github.com/user-attachments/assets/53ba5841-1748-4531-b651-be0fac36af44" />
 <img width="1591" height="1144" alt="1000002950" src="https://github.com/user-attachments/assets/527f74ff-d1f6-4de9-b8ca-9299e1a0f44f" />
