@@ -93,7 +93,22 @@ async def upload_audio_file(file: UploadFile = File(...)):
 @app.get("/api/projects")
 def get_projects():
     response = supabase.table("projects").select("*").execute()
-    return response.data
+    
+    formatted_projects = []
+    for item in response.data:
+        formatted_projects.append({
+            "id": str(item.get("id")),
+            "name": item.get("name", ""),
+            "description": item.get("description", ""),
+            "status": item.get("status", "Active"),
+            "progress": item.get("progress", 0),
+            "membersCount": item.get("members_count", 0),
+            "mapsCount": item.get("maps_count", 0),
+            "audioCount": item.get("audio_count", 0),
+            "updatedAt": item.get("updated_at", "")
+        })
+        
+    return formatted_projects
 
 @app.get("/api/projects/{project_id}")
 def get_project_detail(project_id: str):
@@ -140,17 +155,24 @@ def get_map_detail(map_id: str):
 @app.post("/api/maps")
 def create_map(payload: MindMapCreateDTO):
     try:
+        # nodes_data güvenli okuma
+        nodes_dict = payload.nodes_data or {}
+        nodes_list = nodes_dict.get("nodes", []) if isinstance(nodes_dict, dict) else []
+        nodes_count = len(nodes_list)
+
         data = {
             "id": f"m-{uuid.uuid4().hex[:6]}",
             "title": payload.title,
-            "category": payload.category,
+            "category": payload.category or "MEETINGS",
             "project_id": payload.project_id,
-            "nodes_data": payload.nodes_data or {},
-            "nodes_count": len(payload.nodes_data.get("nodes", [])) if payload.nodes_data else 0
+            "nodes_data": nodes_dict,
+            "nodes_count": nodes_count
         }
+        
         response = supabase.table("mind_maps").insert(data).execute()
         return {"status": "success", "data": response.data}
     except Exception as e:
+        print("MIND MAP CREATE ERROR:", str(e))
         raise HTTPException(status_code=500, detail=f"Map oluşturma hatası: {str(e)}")
 
 @app.put("/api/maps/{map_id}")
@@ -160,7 +182,8 @@ def update_map(map_id: str, payload: MindMapUpdateDTO):
         update_data["title"] = payload.title
     if payload.nodes_data:
         update_data["nodes_data"] = payload.nodes_data
-        update_data["nodes_count"] = len(payload.nodes_data.get("nodes", []))
+        nodes_list = payload.nodes_data.get("nodes", []) if isinstance(payload.nodes_data, dict) else []
+        update_data["nodes_count"] = len(nodes_list)
     
     response = supabase.table("mind_maps").update(update_data).eq("id", map_id).execute()
     return {"status": "success", "data": response.data}
@@ -169,8 +192,6 @@ def update_map(map_id: str, payload: MindMapUpdateDTO):
 def delete_map(map_id: str):
     supabase.table("mind_maps").delete().eq("id", map_id).execute()
     return {"status": "success", "message": "Harita silindi."}
-
-
 # --- 4. LIBRARY API ---
 @app.get("/api/library")
 def get_library():
