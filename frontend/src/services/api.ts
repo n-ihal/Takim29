@@ -127,6 +127,11 @@ export const getAudioLibrary = async (): Promise<ApiResponse<unknown>> => {
   return response.data;
 };
 
+export const processAudio = async (fileId: string, projectId?: string): Promise<ApiResponse<any>> => {
+  const response = await api.post('/api/process-audio', { file_id: fileId, project_id: projectId });
+  return response.data;
+};
+
 // ==========================================
 // 4. ENTEGRASYONLAR & ARAMA
 // ==========================================

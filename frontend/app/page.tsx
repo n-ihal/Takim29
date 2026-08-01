@@ -15,7 +15,7 @@ import {
   Sparkles,
   Upload
 } from 'lucide-react';
-import { getProjects, createProject, ProjectDTO } from '../src/services/api';
+import { getProjects, createProject, ProjectDTO, uploadAudio, processAudio } from '../src/services/api';
 
 function ProjectsTestSection() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -85,8 +85,9 @@ export default function Home() {
   const [currentStepText, setCurrentStepText] = useState('Hazır');
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Gerçek dosya seçme ve analiz simülasyonu tetikleyicisi
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [mindMapData, setMindMapData] = useState(MOCK_MIND_MAP);
+
+  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -94,31 +95,87 @@ export default function Home() {
     setUploadProgress(15);
     setCurrentStepText(`"${file.name}" yükleniyor...`);
 
-    setTimeout(() => {
+    try {
+      // 1. Dosyayı GERÇEKTEN backend'e yükle
+      const uploadResult: any = await uploadAudio(file);
+      const fileId = uploadResult.file_id; // HATA İHTİMALİ: file_id burada undefined dönebilir 
+
       setUploadProgress(50);
-      setCurrentStepText('STT: Ses metne dönüştürülüyor...');
-    }, 1200);
+      setCurrentStepText('STT: Ses metne dönüştürülüyor... (bu biraz sürebilir)');
 
-    setTimeout(() => {
-      setUploadProgress(85);
+      // 2. Gerçek transkripsiyon + LLM analizi
+      const result: any = await processAudio(fileId);
+
+      setUploadProgress(90);
       setCurrentStepText('AI: Zihin haritası oluşturuluyor...');
-    }, 2800);
 
-    setTimeout(() => {
+      if (result.status === 'success' && result.data) {
+        const rawNodes = result.data.nodes || [];
+        const rawEdges = result.data.edges || [];
+        const rootLabel = file.name.replace(/\.[^/.]+$/, "");
+
+        const formattedNodes: Array<{
+          id: string;
+          label: string;
+          type: string;
+          color: string;
+          parentId?: string;
+          summary?: string;
+        }> = [
+          { id: 'root-topic', label: rootLabel, type: 'root', color: '#8b5cf6' }
+        ];
+
+        const parentMap: { [key: string]: string } = {};
+        rawEdges.forEach((edge: any) => {
+          parentMap[edge.to] = edge.from;
+        });
+
+        rawNodes.forEach((node: any, index: number) => {
+          let nodeType = 'main';
+          let parentId = undefined;
+
+          if (index < 3) {
+            nodeType = 'main';
+          } else {
+            nodeType = 'sub';
+            parentId = parentMap[node.id] || rawNodes[0]?.id || 'root-topic';
+          }
+
+          formattedNodes.push({
+            id: node.id || `node-${index}`,
+            label: node.label,
+            type: nodeType,
+            color: nodeType === 'main' ? '#6366f1' : '#a855f7',
+            parentId: parentId,
+            summary: node.summary
+          });
+        });
+
+        setMindMapData({
+          id: 'dynamic-map-' + Date.now(),
+          title: rootLabel,
+          nodes: formattedNodes
+        });
+      }
+
       setUploadProgress(100);
       setCurrentStepText('Zihin Haritası Hazır!');
+    } catch (error) {
+      console.error("İşlem hatası:", error);
+      setCurrentStepText('Hata oluştu, tekrar deneyin.');
+    } finally {
       setIsProcessing(false);
-    }, 4000);
+    }
   };
 
   const handleZoomIn = () => setZoomLevel((prev) => Math.min(prev + 0.15, 1.8));
   const handleZoomOut = () => setZoomLevel((prev) => Math.max(prev - 0.15, 0.5));
 
   const exportAsJSON = () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(MOCK_MIND_MAP, null, 2));
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mindMapData, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `${MOCK_MIND_MAP.id}.json`);
+    downloadAnchor.setAttribute("download", `${mindMapData.id}.json`);
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();
@@ -142,7 +199,6 @@ export default function Home() {
   return (
     <div className="flex-1 p-6 grid grid-cols-12 gap-6 max-w-[1920px] w-full mx-auto antialiased selection:bg-indigo-500 selection:text-white">
       
-      {/* Gizli Dosya Inputu */}
       <input 
         type="file" 
         ref={fileInputRef} 
@@ -194,7 +250,7 @@ export default function Home() {
           <div className="flex flex-col gap-3">
             <div className="p-3.5 rounded-xl bg-[#1a2035] border border-indigo-500/40 cursor-pointer shadow-sm flex items-center justify-between">
               <div>
-                <p className="text-xs font-semibold text-slate-100">{MOCK_MIND_MAP.title}</p>
+                <p className="text-xs font-semibold text-slate-100">{mindMapData.title}</p>
                 <p className="text-[11px] text-slate-400 mt-1">Jan 18, 2026 • 1h 05m</p>
               </div>
               <CheckCircle2 className="w-4 h-4 text-emerald-400" />
@@ -206,7 +262,6 @@ export default function Home() {
       {/* SAĞ PANEL (ZİHİN HARİTASI TUVALİ) */}
       <div className="col-span-12 lg:col-span-9 bg-[#121622] border border-[#1f2438] rounded-2xl p-5 flex flex-col relative overflow-hidden shadow-2xl min-h-[650px]">
         
-        {/* ToolBar */}
         <div className="flex items-center justify-between pb-4 border-b border-[#1f2438] z-20">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-indigo-400" />
@@ -263,7 +318,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* CANVAS */}
         <div ref={mindMapRef} className="flex-1 bg-[#090b10] rounded-xl mt-4 relative overflow-hidden flex items-center justify-center border border-[#161a28] p-8">
           <div className="absolute inset-0 bg-[radial-gradient(#1f2438_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none"></div>
 
@@ -271,7 +325,7 @@ export default function Home() {
             className="relative transition-transform duration-300 ease-out origin-center flex flex-col items-center gap-10"
             style={{ transform: `scale(${zoomLevel})` }}
           >
-            {MOCK_MIND_MAP.nodes.filter(n => n.type === 'root').map((rootNode) => {
+            {mindMapData.nodes.filter(n => n.type === 'root').map((rootNode) => {
               const isHighlighted = searchQuery && rootNode.label.toLowerCase().includes(searchQuery.toLowerCase());
               return (
                 <div 
@@ -287,9 +341,9 @@ export default function Home() {
             })}
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 relative">
-              {MOCK_MIND_MAP.nodes.filter(n => n.type === 'main').map((mainNode) => {
+              {mindMapData.nodes.filter(n => n.type === 'main').map((mainNode) => {
                 const isHighlighted = searchQuery && mainNode.label.toLowerCase().includes(searchQuery.toLowerCase());
-                const subNodes = MOCK_MIND_MAP.nodes.filter(n => n.parentId === mainNode.id);
+                const subNodes = mindMapData.nodes.filter(n => n.parentId === mainNode.id);
 
                 return (
                   <div key={mainNode.id} className="flex flex-col items-center gap-3">
@@ -326,7 +380,7 @@ export default function Home() {
           </div>
 
           <div className="absolute bottom-4 right-4 bg-[#121622]/90 border border-[#1f2438] p-2 rounded-xl backdrop-blur-md shadow-xl flex flex-col items-end gap-1 pointer-events-none">
-            <span className="text-[10px] text-slate-400 font-mono">Nodes: {MOCK_MIND_MAP.nodes.length}</span>
+            <span className="text-[10px] text-slate-400 font-mono">Nodes: {mindMapData.nodes.length}</span>
             <span className="text-[10px] text-indigo-400 font-mono">Zoom: {Math.round(zoomLevel * 100)}%</span>
           </div>
         </div>

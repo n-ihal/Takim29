@@ -1,24 +1,25 @@
 import json
 from pathlib import Path
 
-from .align import assign_speakers
+# from .align import assign_speakers  # Diarization iptal edildi
 from .asr import run_transcription
 from .audio import audio_to_wav
 from .config import TranscriptionConfig
-from .diarization import run_diarization
+# from .diarization import run_diarization  # Diarization iptal edildi
 from .segment import build_sentence_segments
 
 
 def transcribe(input_path: str | Path, cfg: TranscriptionConfig | None = None) -> dict:
-    """mp3/wav/m4a toplantı kaydını, cümle cümle zaman damgalı ve konuşmacı
-    etiketli bir sözlüğe dönüştürür (bkz. backend/README.md JSON şeması)."""
+    """mp3/wav/m4a toplantı kaydını, cümle cümle zaman damgalı bir sözlüğe dönüştürür
+    (Diarization/Konuşmacı Ayrımı Hız İçin Devre Dışı Bırakıldı)."""
     cfg = cfg or TranscriptionConfig()
     input_path = Path(input_path)
 
     wav_path = audio_to_wav(input_path)
     try:
+        # Sadece STT (Sesten Metne) işlemini çalıştırıyoruz
         words = run_transcription(wav_path, cfg)
-        diarization_turns = run_diarization(wav_path, cfg)
+        # diarization_turns = run_diarization(wav_path, cfg)  # İPTAL EDİLDİ
     finally:
         if wav_path.parent.name.startswith("vocalyze_"):
             wav_path.unlink(missing_ok=True)
@@ -28,24 +29,17 @@ def transcribe(input_path: str | Path, cfg: TranscriptionConfig | None = None) -
                 pass
 
     sentence_segments = build_sentence_segments(words, cfg)
-    labeled_segments = assign_speakers(sentence_segments, diarization_turns)
-
-    speaker_names: dict[str, str] = {}
-    ordered_speakers: list[str] = []
-    for seg in labeled_segments:
-        raw = seg["speaker_raw"]
-        if raw is not None and raw not in speaker_names:
-            speaker_names[raw] = f"Kişi {len(speaker_names) + 1}"
-            ordered_speakers.append(speaker_names[raw])
-
+    
+    # Konuşmacı ayrımı (Diarization) iptal edildiği için her segmente 
+    # varsayılan bir "Tek Konuşmacı" etiketi atıyoruz.
     output_segments = []
-    for i, seg in enumerate(labeled_segments):
+    for i, seg in enumerate(sentence_segments):
         output_segments.append(
             {
                 "id": i,
                 "start": round(seg["start"], 2),
                 "end": round(seg["end"], 2),
-                "speaker": speaker_names.get(seg["speaker_raw"], "Bilinmeyen"),
+                "speaker": "Tek Konuşmacı",
                 "text": seg["text"],
             }
         )
@@ -56,7 +50,7 @@ def transcribe(input_path: str | Path, cfg: TranscriptionConfig | None = None) -
         "audio_file": input_path.name,
         "duration": duration,
         "model": cfg.whisper_model,
-        "speakers": ordered_speakers,
+        "speakers": ["Tek Konuşmacı"],
         "segments": output_segments,
     }
 
