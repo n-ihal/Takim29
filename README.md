@@ -207,7 +207,7 @@ Sprint 3'ün sonunda Vocalyze, artık sadece bir ses-metin dönüştürücü de�
 
 Emeği geçen herkese teşekkürler!
 
-<img width="1044" height="1127" alt="1000002952" src="https://github.com/user-attachments/assets/0a2eea57-4db7-42e6-bd0b-5166bd2b60a5" />
+
 <img width="1521" height="692" alt="bootcamp1" src="https://github.com/user-attachments/assets/693fb842-819d-4c39-8726-f9da71177e58" />
 <img width="1507" height="692" alt="bootcamp2" src="https://github.com/user-attachments/assets/390534ec-1452-47cd-a153-0a4988b2e8de" />
 <img width="1512" height="697" alt="bootcamp3" src="https://github.com/user-attachments/assets/20c8be0c-e0a4-4cdc-8662-93d3a56229e5" />
@@ -219,7 +219,7 @@ Emeği geçen herkese teşekkürler!
 <img width="3035" height="1695" alt="1000002945" src="https://github.com/user-attachments/assets/f611350c-de18-4e55-aa1f-6230e2d9973a" />
 <img width="1866" height="1097" alt="1000002951" src="https://github.com/user-attachments/assets/4dbf0f7b-08e3-42c3-abbf-7bda6725860f" />
 <img width="1591" height="1144" alt="1000002950" src="https://github.com/user-attachments/assets/2a0bc253-090f-41d7-b84f-05bb2478f48e" />
-
+<img width="1044" height="1127" alt="1000002952" src="https://github.com/user-attachments/assets/0a2eea57-4db7-42e6-bd0b-5166bd2b60a5" />
 
 
 
