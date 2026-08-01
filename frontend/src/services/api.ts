@@ -127,8 +127,13 @@ export const getAudioLibrary = async (): Promise<ApiResponse<unknown>> => {
   return response.data;
 };
 
-export const processAudio = async (fileId: string, projectId?: string): Promise<ApiResponse<any>> => {
-  const response = await api.post('/api/process-audio', { file_id: fileId, project_id: projectId });
+// Dil desteği (target_language) eklenmiş processAudio fonksiyonu
+export const processAudio = async (fileId: string, projectId?: string, targetLanguage: string = "Turkish"): Promise<ApiResponse<any>> => {
+  const response = await api.post('/api/process-audio', { 
+    file_id: fileId, 
+    project_id: projectId, 
+    target_language: targetLanguage 
+  });
   return response.data;
 };
 
